@@ -5,6 +5,8 @@ import random
 import string
 import qrcode
 import os
+import io
+import base64
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -18,44 +20,22 @@ sessions = {}
 def generate_session_id():
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
 
-# Generate QR code
-# def generate_qr(session_id):
-#     url = f"http://192.168.1.12:5000/session/{session_id}"
 
-#     qr = qrcode.make(url)
-
-#     path = f"static/qr/{session_id}.png"
-
-#     qr.save(path)
-
-#     return path
-# def generate_qr(session_id, base_url):
-
-#     url = f"{base_url}session/{session_id}"
-
-#     qr = qrcode.make(url)
-
-#     path = f"static/qr/{session_id}.png"
-
-#     qr.save(path)
-
-#     return path
 def generate_qr(session_id, base_url):
 
     url = f"{base_url}session/{session_id}"
 
     qr = qrcode.make(url)
 
-    folder_path = "static/qr"
+    buffer = io.BytesIO()
 
-    # Create folder if not exists
-    os.makedirs(folder_path, exist_ok=True)
+    qr.save(buffer, format="PNG")
 
-    path = f"{folder_path}/{session_id}.png"
+    buffer.seek(0)
 
-    qr.save(path)
+    qr_base64 = base64.b64encode(buffer.getvalue()).decode()
 
-    return path
+    return qr_base64
 
 @app.route('/')
 def home():
@@ -69,12 +49,12 @@ def home():
 
     base_url = request.host_url
 
-    qr_path = generate_qr(session_id, base_url)
+    qr_code = generate_qr(session_id, base_url)
 
     return render_template(
         'index.html',
         session_id=session_id,
-        qr_path=qr_path
+        qr_code=qr_code
     )
 
 @app.route('/session/<session_id>')

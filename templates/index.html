@@ -14,7 +14,7 @@
 
         <h2>Scan QR to Send Text</h2>
 
-        <img src="{{ url_for('static', filename='qr/' + session_id + '.png') }}">
+        <img src="data:image/png;base64,{{ qr_code }}">
 
         <h3>Session ID: {{ session_id }}</h3>
 
