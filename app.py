@@ -29,13 +29,29 @@ def generate_session_id():
 #     qr.save(path)
 
 #     return path
+# def generate_qr(session_id, base_url):
+
+#     url = f"{base_url}session/{session_id}"
+
+#     qr = qrcode.make(url)
+
+#     path = f"static/qr/{session_id}.png"
+
+#     qr.save(path)
+
+#     return path
 def generate_qr(session_id, base_url):
 
     url = f"{base_url}session/{session_id}"
 
     qr = qrcode.make(url)
 
-    path = f"static/qr/{session_id}.png"
+    folder_path = "static/qr"
+
+    # Create folder if not exists
+    os.makedirs(folder_path, exist_ok=True)
+
+    path = f"{folder_path}/{session_id}.png"
 
     qr.save(path)
 
