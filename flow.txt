@@ -1,0 +1,35 @@
+labbridge/
+│
+├── app.py
+├── requirements.txt
+├── .gitignore
+├── README.md
+│
+├── static/
+│   │
+│   ├── css/
+│   │   └── style.css
+│   │
+│   ├── js/
+│   │   ├── main.js
+│   │   ├── sender.js
+│   │   └── receiver.js
+│   │
+│   └── qr/
+│
+├── templates/
+│   │
+│   ├── index.html
+│   ├── session.html
+│   └── receiver.html
+│
+├── utils/
+│   │
+│   ├── generate_qr.py
+│   ├── session_manager.py
+│   └── cleanup.py
+│
+├── data/
+│   └── sessions.json
+│
+└── uploads/

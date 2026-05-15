@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LabBridge</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>LabBridge</h1>
+
+        <h2>Scan QR to Send Text</h2>
+
+        <img src="{{ url_for('static', filename='qr/' + session_id + '.png') }}">
+
+        <h3>Session ID: {{ session_id }}</h3>
+
+        <div id="received-text">
+            Waiting for text...
+        </div>
+
+    </div>
+
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+
+<script>
+    const SESSION_ID = "{{ session_id }}";
+</script>
+
+<script src="{{ url_for('static', filename='js/receiver.js') }}"></script>
+
+</body>
+</html>

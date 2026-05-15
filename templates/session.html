@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Send Text</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Send Text</h1>
+
+    <textarea
+        id="text-input"
+        placeholder="Paste your text here..."
+    ></textarea>
+
+    <br>
+
+    <button id="send-btn">
+        Send
+    </button>
+
+</div>
+
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+
+<script>
+    const SESSION_ID = "{{ session_id }}";
+</script>
+
+<script src="{{ url_for('static', filename='js/sender.js') }}"></script>
+
+</body>
+</html>
