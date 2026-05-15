@@ -1,4 +1,5 @@
-from flask import Flask, render_template, url_for
+# from flask import Flask, render_template, url_for
+from flask import Flask, render_template, request
 from flask_socketio import SocketIO
 import random
 import string
@@ -18,8 +19,19 @@ def generate_session_id():
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
 
 # Generate QR code
-def generate_qr(session_id):
-    url = f"http://192.168.1.12:5000/session/{session_id}"
+# def generate_qr(session_id):
+#     url = f"http://192.168.1.12:5000/session/{session_id}"
+
+#     qr = qrcode.make(url)
+
+#     path = f"static/qr/{session_id}.png"
+
+#     qr.save(path)
+
+#     return path
+def generate_qr(session_id, base_url):
+
+    url = f"{base_url}session/{session_id}"
 
     qr = qrcode.make(url)
 
@@ -33,12 +45,15 @@ def generate_qr(session_id):
 def home():
 
     session_id = generate_session_id()
+    
 
     sessions[session_id] = {
         "text": ""
     }
 
-    qr_path = generate_qr(session_id)
+    base_url = request.host_url
+
+    qr_path = generate_qr(session_id, base_url)
 
     return render_template(
         'index.html',
